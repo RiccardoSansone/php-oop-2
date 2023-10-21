@@ -44,25 +44,25 @@
 
     $products = [];
 
-    $dog = new categories("dog", './../assets/img/dog.png');
-    $cat = new categories("cat", "../assets/img/cat.png");
+    $dog = new categories("dog", "./assets/img/dog.png");
+    $cat = new categories("cat", "./assets/img/cat.png");
 
-    $feedCat = new productsType($cat->$species, $cat->$icon,"feed");
-    $feedDog = new productsType($dog->$species, $dog->$icon, "feed");
+    $feedCat = new productsType($cat->species, $cat->icon,"feed");
+    $feedDog = new productsType($dog->species, $dog->icon, "feed");
 
-    $kennelCat = new productsType($cat->$species, $cat->$icon,"kennel");
-    $kennelDog = new productsType($dog->$species, $dog->$icon, "kennel");
+    $kennelCat = new productsType($cat->species, $cat->icon,"kennel");
+    $kennelDog = new productsType($dog->species, $dog->icon, "kennel");
 
-    $gameCat = new productsType($cat->$species, $cat->$icon,"game");
-    $gameDog = new productsType($dog->$species, $dog->$icon, "game");
+    $gameCat = new productsType($cat->species, $cat->icon,"game");
+    $gameDog = new productsType($dog->species, $dog->icon, "game");
 
-    $virtusCat = new products($feedCat->$species,$feedCat->$icon,$feedCat->$typeName, "Virtus", "100% animal protein", "https://picsum.photos/200/300", 19.99);
-    $loveCat = new products($kennelCat->$species,$kennelCat->$icon,$kennelCat->$typeName, "Love", "100% cotton", "https://picsum.photos/200/300", 39.99);
-    $yesCat = new products($gameCat->$species,$gameCat->$icon,$gameCat->$typeName, "Yes", "100% rubber", "https://picsum.photos/200/300", 9.99);
+    $virtusCat = new products($feedCat->species,$feedCat->icon,$feedCat->typeName, "Virtus", "100% animal protein", "https://picsum.photos/200/300", 19.99);
+    $loveCat = new products($kennelCat->species,$kennelCat->icon,$kennelCat->typeName, "Love", "100% cotton", "https://picsum.photos/200/300", 39.99);
+    $yesCat = new products($gameCat->species,$gameCat->icon,$gameCat->typeName, "Yes", "100% rubber", "https://picsum.photos/200/300", 9.99);
     
-    $virtusDog = new products($feedDog->$species,$feedDog->$icon,$feedDog->$typeName, "Virtus", "100% animal protein", "https://picsum.photos/200/300", 19.99);
-    $loveDog = new products($kennelDog->$species,$kennelDog->$icon,$kennelDog->$typeName, "Love", "100% cotton", "https://picsum.photos/200/300", 39.99);
-    $yesDog = new products($gameDog->$species,$gameDog->$icon,$gameDog->$typeName, "Yes", "100% rubber", "https://picsum.photos/200/300", 9.99);
+    $virtusDog = new products($feedDog->species,$feedDog->icon,$feedDog->typeName, "Virtus", "100% animal protein", "https://picsum.photos/200/300", 19.99);
+    $loveDog = new products($kennelDog->species,$kennelDog->icon,$kennelDog->typeName, "Love", "100% cotton", "https://picsum.photos/200/300", 39.99);
+    $yesDog = new products($gameDog->species,$gameDog->icon,$gameDog->typeName, "Yes", "100% rubber", "https://picsum.photos/200/300", 9.99);
 
     $products = [$virtusCat, $loveCat, $yesCat, $virtusDog, $loveDog, $yesDog];
 
@@ -90,16 +90,16 @@
     <!-- /header -->
 
     <main>
-        <div class="container d-flex justify-content-around wrap gap-3">
+        <div class="container d-flex justify-content-around flex-wrap gap-3">
 
         <?php foreach ($products as $product) : ?>
-            <div class="col">
-                <div class="card shadow p-3 flex-column gap-2">
+            <div class="col-3 width_30 mb-2">
+                <div style="height: 420px;" class="card shadow p-3 flex-column gap-2 width_30 mh-100">
                     <img src="<?= $product->images;?>" alt="">
                     <h4><?= $product->brand;?></h4>
-                    <span><?= $product->typeName;?></span>
+                    <h6><?= $product->typeName;?></h6>
                     <p><?= $product->description ;?></p>
-                    <img style="width: 25px; aspect-ratio: 1; border-radius: 50%;" src="<?= $product->icon; ?>" alt="">
+                    <img style="width: 30px; aspect-ratio: 1; border-radius: 50%; object-fit:cover;" src="<?= $product->icon; ?>" alt="">
                     <small><?= $product->price ;?></small>
                 </div>
             </div>
