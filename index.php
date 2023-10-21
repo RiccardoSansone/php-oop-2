@@ -1,4 +1,71 @@
 <?php
+
+    class categories {
+
+      public $species;
+      public $icon;
+
+      public function __construct($species, $icon)
+      {
+        $this->species = $species;
+        $this->icon = $icon;
+      }
+
+    }
+
+    class productsType extends categories {
+        public $typeName;
+
+        public function __construct($species, $icon, $typeName)
+        {
+            parent::__construct($species, $icon);
+            $this->typeName = $typeName;
+        }
+    }
+
+    class products extends productsType {
+
+        public $brand;
+        public $description;
+        public $images;
+        public $price;
+
+        public function __construct($species, $icon, $typeName, $brand,$description, $images, $price)
+        {
+            parent::__construct($species, $icon, $typeName);
+            $this->brand = $brand;
+            $this->description = $description;
+            $this->images = $images;
+            $this->price = $price;
+
+        }
+
+    }
+
+    $products = [];
+
+    $dog = new categories("dog", './../assets/img/dog.png');
+    $cat = new categories("cat", "../assets/img/cat.png");
+
+    $feedCat = new productsType($cat->$species, $cat->$icon,"feed");
+    $feedDog = new productsType($dog->$species, $dog->$icon, "feed");
+
+    $kennelCat = new productsType($cat->$species, $cat->$icon,"kennel");
+    $kennelDog = new productsType($dog->$species, $dog->$icon, "kennel");
+
+    $gameCat = new productsType($cat->$species, $cat->$icon,"game");
+    $gameDog = new productsType($dog->$species, $dog->$icon, "game");
+
+    $virtusCat = new products($feedCat->$species,$feedCat->$icon,$feedCat->$typeName, "Virtus", "100% animal protein", "https://picsum.photos/200/300", 19.99);
+    $loveCat = new products($kennelCat->$species,$kennelCat->$icon,$kennelCat->$typeName, "Love", "100% cotton", "https://picsum.photos/200/300", 39.99);
+    $yesCat = new products($gameCat->$species,$gameCat->$icon,$gameCat->$typeName, "Yes", "100% rubber", "https://picsum.photos/200/300", 9.99);
+    
+    $virtusDog = new products($feedDog->$species,$feedDog->$icon,$feedDog->$typeName, "Virtus", "100% animal protein", "https://picsum.photos/200/300", 19.99);
+    $loveDog = new products($kennelDog->$species,$kennelDog->$icon,$kennelDog->$typeName, "Love", "100% cotton", "https://picsum.photos/200/300", 39.99);
+    $yesDog = new products($gameDog->$species,$gameDog->$icon,$gameDog->$typeName, "Yes", "100% rubber", "https://picsum.photos/200/300", 9.99);
+
+    $products = [$virtusCat, $loveCat, $yesCat, $virtusDog, $loveDog, $yesDog];
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,27 +91,21 @@
 
     <main>
         <div class="container d-flex justify-content-around wrap gap-3">
+
+        <?php foreach ($products as $product) : ?>
             <div class="col">
                 <div class="card shadow p-3 flex-column gap-2">
-                    <img src="https://picsum.photos/100/100" alt="">
-                    <h4>Lorem</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, illum?</p>
+                    <img src="<?= $product->images;?>" alt="">
+                    <h4><?= $product->brand;?></h4>
+                    <span><?= $product->typeName;?></span>
+                    <p><?= $product->description ;?></p>
+                    <img style="width: 25px; aspect-ratio: 1; border-radius: 50%;" src="<?= $product->icon; ?>" alt="">
+                    <small><?= $product->price ;?></small>
                 </div>
             </div>
-            <div class="col">
-                <div class="card shadow p-3 flex-column gap-2">
-                    <img src="https://picsum.photos/100/100" alt="">
-                    <h4>Lorem</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, illum?</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card shadow p-3 flex-column gap-2">
-                    <img src="https://picsum.photos/100/100" alt="">
-                    <h4>Lorem</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, illum?</p>
-                </div>
-            </div>
+        <?php endforeach; ?>
+            
+
         </div>  
     </main>
     <!-- /main -->
