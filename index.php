@@ -17,6 +17,7 @@
     }
 
     class productsType extends categories {
+        use PositiveMess;
         public $typeName;
 
         public function __construct($species, $icon, $typeName)
@@ -27,7 +28,7 @@
     }
 
     class products extends productsType {
-
+        use PositiveMess;
         public $brand;
         public $description;
         public $images;
@@ -57,14 +58,14 @@
 
     }
 
-    $discountedProduct = new products('dog', './assets/img/dog.png/', 'feed', 'Virtus', '100% vegan','https://picsum.photos/200/300', 20);
+    // $discountedProduct = new products('dog', './assets/img/dog.png/', 'feed', 'Virtus', '100% vegan','https://picsum.photos/200/300', 20);
 
-    try {
-        $reducedPrice = $discountedProduct->calcDiscount();
-        var_dump($reducedPrice);
-    } catch (Exception $error) {
-        echo 'Errore: '. $error->getMessage();
-    }
+    // try {
+    //     $reducedPrice = $discountedProduct->calcDiscount();
+    //     var_dump($reducedPrice);
+    // } catch (Exception $error) {
+    //     echo 'Errore: '. $error->getMessage();
+    // }
         // end exception 
 
     
@@ -74,8 +75,7 @@
     $dog = new categories("dog", "./assets/img/dog.png");
     $cat = new categories("cat", "./assets/img/cat.png");
 
-    // 
-    var_dump($dog->positive());
+    // var_dump($dog->positive());
 
     $feedCat = new productsType($cat->species, $cat->icon,"feed");
     $feedDog = new productsType($dog->species, $dog->icon, "feed");
@@ -86,7 +86,15 @@
     $gameCat = new productsType($cat->species, $cat->icon,"game");
     $gameDog = new productsType($dog->species, $dog->icon, "game");
 
-    $virtusCat = new products($feedCat->species,$feedCat->icon,$feedCat->typeName, "Virtus", "100% animal protein", "https://picsum.photos/200/300", 19.99);
+    $virtusCat = new products($feedCat->species,$feedCat->icon,$feedCat->typeName, "Virtus", "100% animal protein", "https://picsum.photos/200/300", 25);
+
+    try {
+        $reducedPrice = $virtusCat->calcDiscount();
+        // var_dump($reducedPrice);
+    } catch (Exception $error) {
+        echo 'Errore: '. $error->getMessage();
+    }
+
     $loveCat = new products($kennelCat->species,$kennelCat->icon,$kennelCat->typeName, "Love", "100% cotton", "https://picsum.photos/200/300", 39.99);
     $yesCat = new products($gameCat->species,$gameCat->icon,$gameCat->typeName, "Yes", "100% rubber", "https://picsum.photos/200/300", 9.99);
     
@@ -124,13 +132,19 @@
 
         <?php foreach ($products as $product) : ?>
             <div class="col-3 width_30 mb-2">
-                <div style="height: 420px;" class="card shadow p-3 flex-column gap-2 width_30 mh-100">
+                <div style="height: 500px;" class="card shadow p-3 flex-column gap-2 width_30 mh-100">
                     <img src="<?= $product->images;?>" alt="">
                     <h4><?= $product->brand;?></h4>
                     <h6><?= $product->typeName;?></h6>
                     <p><?= $product->description ;?></p>
                     <img style="width: 30px; aspect-ratio: 1; border-radius: 50%; object-fit:cover;" src="<?= $product->icon; ?>" alt="">
                     <small><?= $product->price ;?></small>
+                    <small class="text-danger"><?= $product->positive();?></small>
+                    <?php if($product->price == 25): ;?>
+                        <small>Discounted price: <?= $reducedPrice ?></small>
+                    <?php else:;?>
+                        <small>non hai nessuno sconto</small>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php endforeach; ?>
