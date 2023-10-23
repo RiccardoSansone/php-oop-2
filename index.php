@@ -1,6 +1,9 @@
 <?php
 
+    require_once __DIR__ . '/Traits/PositiveMess.php';
     class categories {
+
+        use PositiveMess;
 
       public $species;
       public $icon;
@@ -40,12 +43,39 @@
 
         }
 
+        // exception 
+        public function calcDiscount(){
+
+            $discount = 10;
+
+            if(!is_numeric($this->price)){
+                throw new Exception('Sorry but it\'s not a number');
+            }
+
+            return $this->price - $discount;
+        }
+
     }
+
+    $discountedProduct = new products('dog', './assets/img/dog.png/', 'feed', 'Virtus', '100% vegan','https://picsum.photos/200/300', 20);
+
+    try {
+        $reducedPrice = $discountedProduct->calcDiscount();
+        var_dump($reducedPrice);
+    } catch (Exception $error) {
+        echo 'Errore: '. $error->getMessage();
+    }
+        // end exception 
+
+    
 
     $products = [];
 
     $dog = new categories("dog", "./assets/img/dog.png");
     $cat = new categories("cat", "./assets/img/cat.png");
+
+    // 
+    var_dump($dog->positive());
 
     $feedCat = new productsType($cat->species, $cat->icon,"feed");
     $feedDog = new productsType($dog->species, $dog->icon, "feed");
